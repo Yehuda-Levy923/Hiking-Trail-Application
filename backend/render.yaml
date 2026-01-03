@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: trailwatch-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: DB_HOST
+        fromDatabase:
+          name: trailwatch-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: trailwatch-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: trailwatch-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: trailwatch-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: trailwatch-db
+          property: password
+      - key: CORS_ORIGIN
+        value: https://your-frontend-url.vercel.app
+
+databases:
+  - name: trailwatch-db
+    databaseName: trailsdb
+    user: trailwatch
+    plan: starter

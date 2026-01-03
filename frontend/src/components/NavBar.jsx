@@ -5,16 +5,27 @@ export default function NavBar() {
     <nav className="navbar">
       <div className="navbar-inner">
         <Link className="navbar-brand" to="/">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z" />
-            <path d="M9 22v-4h6v4" />
-          </svg>
-          TrailWatch
+          <span style={{ fontSize: "1.5rem" }}>🏔️</span>
+          <span style={{ fontWeight: "800", letterSpacing: "0.5px" }}>TrailWatch</span>
         </Link>
 
         <div className="nav-links">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/trails">Trails</NavLink>
+          <NavLink to="/" style={({ isActive }) => ({
+            background: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
+            padding: "8px 16px",
+            borderRadius: "20px",
+            transition: "all 0.3s ease"
+          })}>
+            🏠 Home
+          </NavLink>
+          <NavLink to="/trails" style={({ isActive }) => ({
+            background: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
+            padding: "8px 16px",
+            borderRadius: "20px",
+            transition: "all 0.3s ease"
+          })}>
+            🥾 Trails
+          </NavLink>
         </div>
       </div>
     </nav>
