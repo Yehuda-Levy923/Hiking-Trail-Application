@@ -1,31 +1,30 @@
 /* ============================================
-   TrailWatch - Vibrant & Energetic Theme
+   TrailWatch - Forest Nature Theme
    ============================================ */
 
 /* === CSS Variables === */
 :root {
-  /* Primary Vibrant Colors */
-  --orange-primary: #FF6B35;
-  --orange-bright: #F7931E;
-  --purple-primary: #9B59B6;
-  --purple-deep: #8E44AD;
-  --green-vibrant: #2ECC71;
-  --green-bright: #27AE60;
-  --blue-vibrant: #3498DB;
-  --blue-deep: #2980B9;
-  --pink-vibrant: #E91E63;
-  --yellow-bright: #F39C12;
-  --yellow-vibrant: #F1C40F;
+  /* Primary Forest Colors */
+  --forest-green: #2d5016;
+  --forest-green-light: #3a6b1f;
+  --forest-green-dark: #1a3d0a;
+  --moss-green: #4a7c2e;
+  --pine-green: #1e4d2b;
+  --sage-green: #6b8e5f;
+  --leaf-green: #5c8a3a;
+  --earth-brown: #6b4423;
+  --bark-brown: #4a3728;
+  --sky-blue: #87CEEB;
 
   /* Background Colors */
-  --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-primary: linear-gradient(135deg, #1a3d0a 0%, #2d5016 100%);
   --bg-secondary: #ffffff;
-  --bg-gradient-1: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
-  --bg-gradient-2: linear-gradient(135deg, #9B59B6 0%, #E91E63 100%);
-  --bg-gradient-3: linear-gradient(135deg, #2ECC71 0%, #3498DB 100%);
-  --bg-gradient-4: linear-gradient(135deg, #F39C12 0%, #FF6B35 100%);
-  --bg-light: #FFF9F5;
-  --bg-accent: #FFF3E0;
+  --bg-gradient-1: linear-gradient(135deg, #2d5016 0%, #3a6b1f 100%);
+  --bg-gradient-2: linear-gradient(135deg, #1e4d2b 0%, #2d5016 100%);
+  --bg-gradient-3: linear-gradient(135deg, #4a7c2e 0%, #2d5016 100%);
+  --bg-gradient-4: linear-gradient(135deg, #3a6b1f 0%, #5c8a3a 100%);
+  --bg-light: #f5f9f3;
+  --bg-accent: #e8f5e3;
 
   /* Text Colors */
   --text-primary: #2C3E50;
@@ -33,12 +32,12 @@
   --text-muted: #7F8C8D;
   --text-light: #ffffff;
 
-  /* Traffic Level Colors - Super Vibrant */
-  --traffic-1: #2ECC71;  /* Very Low - Vibrant Green */
-  --traffic-2: #3498DB;  /* Low - Bright Blue */
-  --traffic-3: #F39C12;  /* Moderate - Bright Orange */
-  --traffic-4: #E67E22;  /* High - Deep Orange */
-  --traffic-5: #E74C3C;  /* Very High - Vibrant Red */
+  /* Traffic Level Colors - Nature Themed */
+  --traffic-1: #4a7c2e;  /* Very Low - Forest Green */
+  --traffic-2: #6b8e5f;  /* Low - Sage Green */
+  --traffic-3: #d4a017;  /* Moderate - Golden Yellow */
+  --traffic-4: #d97706;  /* High - Amber */
+  --traffic-5: #b91c1c;  /* Very High - Deep Red */
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -55,14 +54,13 @@
   --radius-xl: 32px;
   --radius-full: 999px;
 
-  /* Shadows - Colorful */
-  --shadow-sm: 0 2px 8px rgba(155, 89, 182, 0.1);
-  --shadow-md: 0 4px 16px rgba(155, 89, 182, 0.15);
-  --shadow-lg: 0 12px 32px rgba(155, 89, 182, 0.2);
-  --shadow-xl: 0 20px 48px rgba(155, 89, 182, 0.25);
-  --shadow-orange: 0 8px 24px rgba(255, 107, 53, 0.3);
-  --shadow-purple: 0 8px 24px rgba(155, 89, 182, 0.3);
-  --shadow-green: 0 8px 24px rgba(46, 204, 113, 0.3);
+  /* Shadows - Natural */
+  --shadow-sm: 0 2px 8px rgba(45, 80, 22, 0.1);
+  --shadow-md: 0 4px 16px rgba(45, 80, 22, 0.15);
+  --shadow-lg: 0 12px 32px rgba(45, 80, 22, 0.2);
+  --shadow-xl: 0 20px 48px rgba(45, 80, 22, 0.25);
+  --shadow-green: 0 8px 24px rgba(45, 80, 22, 0.3);
+  --shadow-forest: 0 8px 24px rgba(30, 77, 43, 0.3);
 
   /* Transitions */
   --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,7 +83,7 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg-light);
+  background: #e8f5e3;
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
@@ -99,12 +97,29 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 60%, rgba(46, 204, 113, 0.06) 0%, transparent 50%);
+  background-image:
+    linear-gradient(180deg, rgba(45, 80, 22, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 80, 22, 0.03) 1px, transparent 1px),
+    radial-gradient(ellipse at 20% 30%, rgba(74, 124, 46, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(30, 77, 43, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(92, 138, 58, 0.08) 0%, transparent 60%);
+  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0, center, center, center;
   pointer-events: none;
   z-index: -1;
+  opacity: 0.6;
+}
+
+body::after {
+  content: '🌲';
+  position: fixed;
+  font-size: 200px;
+  opacity: 0.03;
+  bottom: -50px;
+  right: -30px;
+  z-index: -1;
+  pointer-events: none;
+  transform: rotate(-15deg);
 }
 
 /* === Typography === */
@@ -133,12 +148,11 @@ p { color: var(--text-secondary); }
 }
 
 .page-header h1 {
-  background: var(--bg-gradient-2);
+  background: var(--bg-gradient-1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: var(--spacing-sm);
-  animation: gradient-shift 3s ease infinite;
 }
 
 @keyframes gradient-shift {
@@ -153,12 +167,12 @@ p { color: var(--text-secondary); }
 
 /* === Navigation === */
 .navbar {
-  background: var(--bg-gradient-2);
+  background: var(--bg-gradient-1);
   padding: var(--spacing-md) var(--spacing-lg);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-purple);
+  box-shadow: var(--shadow-forest);
   backdrop-filter: blur(10px);
 }
 
@@ -229,7 +243,7 @@ p { color: var(--text-secondary); }
 .card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px) scale(1.02);
-  border-color: rgba(155, 89, 182, 0.2);
+  border-color: rgba(74, 124, 46, 0.3);
 }
 
 /* === Trail Cards === */
@@ -262,8 +276,8 @@ p { color: var(--text-secondary); }
 
 .trail-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-orange);
-  border-color: var(--orange-primary);
+  box-shadow: var(--shadow-green);
+  border-color: var(--forest-green-light);
 }
 
 .trail-card-header {
@@ -315,7 +329,7 @@ p { color: var(--text-secondary); }
 .trail-meta-item svg {
   width: 16px;
   height: 16px;
-  color: var(--orange-primary);
+  color: var(--forest-green);
 }
 
 .trail-card-footer {
@@ -346,27 +360,27 @@ p { color: var(--text-secondary); }
 }
 
 .difficulty-easy {
-  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+  background: linear-gradient(135deg, #4a7c2e 0%, #3a6b1f 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+  box-shadow: 0 4px 12px rgba(74, 124, 46, 0.4);
 }
 
 .difficulty-moderate {
-  background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+  background: linear-gradient(135deg, #d4a017 0%, #b8860b 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.4);
 }
 
 .difficulty-hard {
-  background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
 }
 
 .difficulty-expert {
-  background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+  background: linear-gradient(135deg, #6b4423 0%, #4a3728 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
+  box-shadow: 0 4px 12px rgba(107, 68, 35, 0.4);
 }
 
 /* === Traffic Indicator === */
@@ -417,24 +431,24 @@ p { color: var(--text-secondary); }
 }
 
 .traffic-level-1 {
-  background: linear-gradient(180deg, #2ECC71 0%, #27AE60 100%);
-  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.4);
+  background: linear-gradient(180deg, #4a7c2e 0%, #3a6b1f 100%);
+  box-shadow: 0 4px 16px rgba(74, 124, 46, 0.4);
 }
 .traffic-level-2 {
-  background: linear-gradient(180deg, #3498DB 0%, #2980B9 100%);
-  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.4);
+  background: linear-gradient(180deg, #6b8e5f 0%, #5c8a3a 100%);
+  box-shadow: 0 4px 16px rgba(107, 142, 95, 0.4);
 }
 .traffic-level-3 {
-  background: linear-gradient(180deg, #F39C12 0%, #E67E22 100%);
-  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.4);
+  background: linear-gradient(180deg, #d4a017 0%, #b8860b 100%);
+  box-shadow: 0 4px 16px rgba(212, 160, 23, 0.4);
 }
 .traffic-level-4 {
-  background: linear-gradient(180deg, #E67E22 0%, #D35400 100%);
-  box-shadow: 0 4px 16px rgba(230, 126, 34, 0.4);
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4);
 }
 .traffic-level-5 {
-  background: linear-gradient(180deg, #E74C3C 0%, #C0392B 100%);
-  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(180deg, #b91c1c 0%, #991b1b 100%);
+  box-shadow: 0 4px 16px rgba(185, 28, 28, 0.4);
 }
 
 .traffic-info h3 {
@@ -479,29 +493,29 @@ p { color: var(--text-secondary); }
 }
 
 .traffic-badge-1 {
-  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+  background: linear-gradient(135deg, #4a7c2e 0%, #3a6b1f 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  box-shadow: 0 4px 12px rgba(74, 124, 46, 0.3);
 }
 .traffic-badge-2 {
-  background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
+  background: linear-gradient(135deg, #6b8e5f 0%, #5c8a3a 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 12px rgba(107, 142, 95, 0.3);
 }
 .traffic-badge-3 {
-  background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+  background: linear-gradient(135deg, #d4a017 0%, #b8860b 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3);
 }
 .traffic-badge-4 {
-  background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
 }
 .traffic-badge-5 {
-  background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
 }
 
 .traffic-dot {
@@ -566,12 +580,12 @@ p { color: var(--text-secondary); }
 .btn-primary {
   background: var(--bg-gradient-1);
   color: var(--text-light);
-  box-shadow: var(--shadow-orange);
+  box-shadow: var(--shadow-green);
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 12px 32px rgba(45, 80, 22, 0.4);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -580,8 +594,8 @@ p { color: var(--text-secondary); }
 
 .btn-secondary {
   background: var(--bg-secondary);
-  color: var(--orange-primary);
-  border: 2px solid var(--orange-primary);
+  color: var(--forest-green);
+  border: 2px solid var(--forest-green);
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -589,7 +603,7 @@ p { color: var(--text-secondary); }
   color: var(--text-light);
   border-color: transparent;
   transform: translateY(-3px) scale(1.05);
-  box-shadow: var(--shadow-orange);
+  box-shadow: var(--shadow-green);
 }
 
 .btn-sm {
@@ -615,13 +629,13 @@ p { color: var(--text-secondary); }
 .spinner {
   width: 50px;
   height: 50px;
-  border: 4px solid rgba(155, 89, 182, 0.2);
-  border-top-color: var(--purple-primary);
-  border-right-color: var(--orange-primary);
-  border-bottom-color: var(--green-vibrant);
+  border: 4px solid rgba(45, 80, 22, 0.2);
+  border-top-color: var(--forest-green);
+  border-right-color: var(--moss-green);
+  border-bottom-color: var(--forest-green-light);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
+  box-shadow: 0 0 20px rgba(45, 80, 22, 0.3);
 }
 
 @keyframes spin {
@@ -723,7 +737,7 @@ p { color: var(--text-secondary); }
 .stat-card:hover {
   transform: translateY(-8px) rotate(2deg);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(255, 107, 53, 0.3);
+  border-color: rgba(74, 124, 46, 0.3);
 }
 
 .stat-card:nth-child(2)::before { background: var(--bg-gradient-3); }
@@ -782,7 +796,7 @@ p { color: var(--text-secondary); }
 
 /* === Home Page Hero === */
 .hero {
-  background: var(--bg-gradient-2);
+  background: var(--bg-gradient-1);
   color: var(--text-light);
   padding: 64px var(--spacing-md);
   text-align: center;

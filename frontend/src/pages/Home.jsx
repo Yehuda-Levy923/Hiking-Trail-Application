@@ -14,13 +14,13 @@ export default function Home() {
   return (
     <div className="container">
       <div className="hero">
-        <h1>🥾 TrailWatch</h1>
+        <h1>🌲 TrailWatch</h1>
         <p>
           Discover real-time trail traffic and plan your perfect outdoor adventure!
           Skip the crowds and find your ideal hiking time.
         </p>
-        <Link className="btn btn-primary" to="/trails" style={{ background: "white", color: "#9B59B6", fontWeight: "700", position: "relative", zIndex: 2 }}>
-          🚀 Explore Trails Now
+        <Link className="btn btn-primary" to="/trails" style={{ background: "white", color: "#2d5016", fontWeight: "700", position: "relative", zIndex: 2 }}>
+          🥾 Explore Trails Now
         </Link>
       </div>
 
