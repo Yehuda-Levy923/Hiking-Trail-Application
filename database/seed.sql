@@ -3,7 +3,18 @@
 -- ============================================
 
 -- Clear existing data
-TRUNCATE trails, traffic_reports RESTART IDENTITY CASCADE;
+TRUNCATE users, trails, traffic_reports RESTART IDENTITY CASCADE;
+
+-- ============================================
+-- Insert Test Users
+-- Password for all test users is: password123
+-- Hash generated with bcrypt (10 salt rounds)
+-- ============================================
+INSERT INTO users (email, password_hash, name) VALUES
+('yehuda.levy@example.com', '$2b$10$rQZ8K5YJhKVzH5YLwLvUxeqK8K5YJhKVzH5YLwLvUxeqK8K5YJhK', 'Yehuda Levy'),
+('haggai.slater@example.com', '$2b$10$rQZ8K5YJhKVzH5YLwLvUxeqK8K5YJhKVzH5YLwLvUxeqK8K5YJhK', 'Haggai Slater'),
+('michael.aharoni@example.com', '$2b$10$rQZ8K5YJhKVzH5YLwLvUxeqK8K5YJhKVzH5YLwLvUxeqK8K5YJhK', 'Michael Aharoni'),
+('maor.atari@example.com', '$2b$10$rQZ8K5YJhKVzH5YLwLvUxeqK8K5YJhKVzH5YLwLvUxeqK8K5YJhK', 'Maor Atari');
 
 -- ============================================
 -- Insert Trails

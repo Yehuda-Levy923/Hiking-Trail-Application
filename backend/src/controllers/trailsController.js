@@ -4,15 +4,16 @@ import { asyncHandler, ApiError } from "../middleware/errorHandler.js";
 export const trailsController = {
   /**
    * GET /api/trails
-   * Get all trails with optional filtering
+   * Get all trails with optional filtering and search
    */
   getAll: asyncHandler(async (req, res) => {
-    const { difficulty, maxLength, location } = req.query;
+    const { difficulty, maxLength, location, search } = req.query;
 
     const trails = await trailsService.getAll({
       difficulty,
       maxLength: maxLength ? parseFloat(maxLength) : undefined,
       location,
+      search,
     });
 
     res.json({

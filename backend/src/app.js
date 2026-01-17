@@ -5,6 +5,7 @@ import morgan from "morgan";
 
 import trailsRouter from "./routes/trails.js";
 import trafficRouter from "./routes/traffic.js";
+import authRouter from "./routes/auth.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -71,6 +72,11 @@ app.get("/api", (req, res) => {
     name: "Hiking Trail Traffic API",
     version: "1.0.0",
     endpoints: {
+      auth: {
+        "POST /api/auth/register": "Register new user",
+        "POST /api/auth/login": "Login user",
+        "GET /api/auth/me": "Get current user (protected)",
+      },
       trails: {
         "GET /api/trails": "Get all trails",
         "GET /api/trails/:id": "Get trail by ID",
@@ -92,6 +98,7 @@ app.get("/api", (req, res) => {
 // ============================================
 // API Routes
 // ============================================
+app.use("/api/auth", authRouter);
 app.use("/api/trails", trailsRouter);
 app.use("/api/traffic", trafficRouter);
 

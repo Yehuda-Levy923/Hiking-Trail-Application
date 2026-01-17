@@ -2,11 +2,11 @@ import pool from "../config/db.js";
 
 export const trailsService = {
   /**
-   * Get all trails with optional filtering
+   * Get all trails with optional filtering and search
    */
   async getAll(filters = {}) {
     let query = `
-      SELECT 
+      SELECT
         t.*,
         tr.congestion_level,
         tr.updated_at as traffic_updated_at
@@ -17,6 +17,13 @@ export const trailsService = {
     const conditions = [];
     const params = [];
     let paramIndex = 1;
+
+    // Search by name or location
+    if (filters.search) {
+      conditions.push(`(t.name ILIKE $${paramIndex} OR t.location ILIKE $${paramIndex})`);
+      params.push(`%${filters.search}%`);
+      paramIndex++;
+    }
 
     if (filters.difficulty) {
       conditions.push(`t.difficulty = $${paramIndex++}`);
