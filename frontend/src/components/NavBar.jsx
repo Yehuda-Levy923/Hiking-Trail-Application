@@ -1,6 +1,22 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function NavBar() {
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const navLinkStyle = (isActive) => ({
+    background: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
+    padding: "8px 16px",
+    borderRadius: "20px",
+    transition: "all 0.3s ease"
+  });
+
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -10,22 +26,32 @@ export default function NavBar() {
         </Link>
 
         <div className="nav-links">
-          <NavLink to="/" style={({ isActive }) => ({
-            background: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
-            padding: "8px 16px",
-            borderRadius: "20px",
-            transition: "all 0.3s ease"
-          })}>
+          <NavLink to="/" style={({ isActive }) => navLinkStyle(isActive)}>
             🏠 Home
           </NavLink>
-          <NavLink to="/trails" style={({ isActive }) => ({
-            background: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
-            padding: "8px 16px",
-            borderRadius: "20px",
-            transition: "all 0.3s ease"
-          })}>
+          <NavLink to="/trails" style={({ isActive }) => navLinkStyle(isActive)}>
             🥾 Trails
           </NavLink>
+
+          {isAuthenticated ? (
+            <>
+              <span className="nav-user">
+                👤 {user?.name}
+              </span>
+              <button onClick={handleLogout} className="nav-logout-btn">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" style={({ isActive }) => navLinkStyle(isActive)}>
+                Login
+              </NavLink>
+              <NavLink to="/register" style={({ isActive }) => navLinkStyle(isActive)}>
+                Register
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </nav>

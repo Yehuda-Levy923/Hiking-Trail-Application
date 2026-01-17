@@ -40,6 +40,7 @@ api.interceptors.response.use(
 export const trailsApi = {
   getAll: async (filters = {}) => {
     const params = new URLSearchParams();
+    if (filters.search) params.append("search", filters.search);
     if (filters.difficulty) params.append("difficulty", filters.difficulty);
     if (filters.maxLength) params.append("maxLength", filters.maxLength);
     if (filters.location) params.append("location", filters.location);
@@ -97,6 +98,35 @@ export const trafficApi = {
     const response = await api.put(`/traffic/${trailId}`, data);
     return response.data;
   },
+};
+
+// ============================================
+// Auth API
+// ============================================
+export const authApi = {
+  register: async (userData) => {
+    const response = await api.post("/auth/register", userData);
+    return response.data;
+  },
+
+  login: async (credentials) => {
+    const response = await api.post("/auth/login", credentials);
+    return response.data;
+  },
+
+  me: async () => {
+    const response = await api.get("/auth/me");
+    return response.data;
+  },
+};
+
+// Function to set auth token for API requests
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common["Authorization"];
+  }
 };
 
 export default api;
