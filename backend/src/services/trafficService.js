@@ -81,6 +81,7 @@ export const trafficService = {
   /**
    * Get traffic summary statistics
    */
+  
   async getStats() {
     const result = await pool.query(`
       SELECT 
@@ -97,6 +98,7 @@ export const trafficService = {
   /**
    * Get congestion level label
    */
+  
   getCongestionLabel(level) {
     const labels = {
       1: "Very Low",
