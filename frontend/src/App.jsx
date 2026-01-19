@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Trails from "./pages/Trails";
@@ -13,7 +12,8 @@ export default function App() {
       <NavBar />
       <main>
         <Routes>
-@@ -17,8 +22,12 @@ export default function App() {
+          <Route path="/" element={<Home />} />
+          <Route path="/trails" element={<Trails />} />
           <Route path="/trails/:id" element={<TrailDetailsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
