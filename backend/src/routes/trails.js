@@ -1,23 +1,24 @@
 import express from "express";
 import trailsController from "../controllers/trailsController.js";
 import { validators } from "../middleware/validators.js";
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
 /**
  * @route   GET /api/trails
- * @desc    Get all trails (with optional filtering)
- * @query   difficulty, maxLength, location
- * @access  Public
+ * @desc    Get all trails (with optional filtering and pagination)
+ * @query   difficulty, maxLength, location, search, page, limit
+ * @access  Public (optionally authenticated for favorites)
  */
-router.get("/", trailsController.getAll);
+router.get("/", authMiddleware.optionalAuth, trailsController.getAll);
 
 /**
  * @route   GET /api/trails/:id
  * @desc    Get a single trail by ID
- * @access  Public
+ * @access  Public (optionally authenticated for favorites)
  */
-router.get("/:id", validators.trailId, trailsController.getById);
+router.get("/:id", authMiddleware.optionalAuth, validators.trailId, trailsController.getById);
 
 /**
  * @route   POST /api/trails

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import NavBar from "./components/Navbar";
+import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Trails from "./pages/Trails";
 import TrailDetailsPage from "./pages/TrailDetailsPage";

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import FavoriteButton from "./FavoriteButton";
 
 const TRAFFIC_LABELS = {
   1: "Very Low",
@@ -34,11 +35,14 @@ export default function TrailCard({ trail }) {
     <div className="trail-card">
       <div className="trail-card-header">
         <h3 className="trail-title">{name}</h3>
-        {difficulty && (
-          <span className={`difficulty-badge ${getDifficultyClass(difficulty)}`}>
-            {difficulty}
-          </span>
-        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)" }}>
+          <FavoriteButton trailId={id} size="small" />
+          {difficulty && (
+            <span className={`difficulty-badge ${getDifficultyClass(difficulty)}`}>
+              {difficulty}
+            </span>
+          )}
+        </div>
       </div>
 
       <p className="trail-desc">{description}</p>

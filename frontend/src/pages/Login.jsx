@@ -128,6 +128,9 @@ export default function Login() {
           </form>
 
           <div className="auth-footer">
+            <p style={{ marginBottom: "var(--spacing-sm)" }}>
+              <Link to="/forgot-password">Forgot your password?</Link>
+            </p>
             <p>
               Don't have an account?{" "}
               <Link to="/register">Create one</Link>

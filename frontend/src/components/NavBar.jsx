@@ -35,9 +35,12 @@ export default function NavBar() {
 
           {isAuthenticated ? (
             <>
-              <span className="nav-user">
+              <NavLink to="/favorites" style={({ isActive }) => navLinkStyle(isActive)}>
+                ❤️ Favorites
+              </NavLink>
+              <NavLink to="/profile" style={({ isActive }) => navLinkStyle(isActive)}>
                 👤 {user?.name}
-              </span>
+              </NavLink>
               <button onClick={handleLogout} className="nav-logout-btn">
                 Logout
               </button>

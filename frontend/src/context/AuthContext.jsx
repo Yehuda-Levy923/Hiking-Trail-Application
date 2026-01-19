@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { authApi, setAuthToken } from "../api/api";
+import { authApi, usersApi, setAuthToken } from "../api/api";
 
 const AuthContext = createContext(null);
 
@@ -80,6 +80,19 @@ export function AuthProvider({ children }) {
     setError(null);
   }, []);
 
+  const updateUser = useCallback(async (profileData) => {
+    setError(null);
+    try {
+      const response = await usersApi.updateProfile(profileData);
+      setUser(response.data);
+      return { success: true, data: response.data };
+    } catch (err) {
+      const message = err.message || "Failed to update profile";
+      setError(message);
+      return { success: false, error: message };
+    }
+  }, []);
+
   const value = {
     user,
     loading,
@@ -89,6 +102,7 @@ export function AuthProvider({ children }) {
     register,
     logout,
     clearError,
+    updateUser,
   };
 
   return (

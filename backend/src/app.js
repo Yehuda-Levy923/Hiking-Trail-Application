@@ -6,6 +6,7 @@ import morgan from "morgan";
 import trailsRouter from "./routes/trails.js";
 import trafficRouter from "./routes/traffic.js";
 import authRouter from "./routes/auth.js";
+import usersRouter from "./routes/users.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -76,9 +77,18 @@ app.get("/api", (req, res) => {
         "POST /api/auth/register": "Register new user",
         "POST /api/auth/login": "Login user",
         "GET /api/auth/me": "Get current user (protected)",
+        "POST /api/auth/forgot-password": "Request password reset",
+        "POST /api/auth/reset-password": "Reset password with token",
+      },
+      users: {
+        "GET /api/users/profile": "Get current user profile (protected)",
+        "PUT /api/users/profile": "Update user profile (protected)",
+        "GET /api/users/favorites": "Get user's favorite trails (protected)",
+        "POST /api/users/favorites/:trailId": "Add trail to favorites (protected)",
+        "DELETE /api/users/favorites/:trailId": "Remove trail from favorites (protected)",
       },
       trails: {
-        "GET /api/trails": "Get all trails",
+        "GET /api/trails": "Get all trails (supports pagination: page, limit)",
         "GET /api/trails/:id": "Get trail by ID",
         "POST /api/trails": "Create new trail",
         "PUT /api/trails/:id": "Update trail",
@@ -99,6 +109,7 @@ app.get("/api", (req, res) => {
 // API Routes
 // ============================================
 app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/trails", trailsRouter);
 app.use("/api/traffic", trafficRouter);
 

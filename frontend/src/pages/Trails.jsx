@@ -1,36 +1,78 @@
 import { useState, useCallback, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { trailsApi } from "../api/api";
 import { useAsync } from "../hooks/useAsync";
 import TrailCard from "../components/TrailCard";
 import RefreshButton from "../components/RefreshButton";
 import SearchBar from "../components/SearchBar";
 import DifficultyFilter from "../components/DifficultyFilter";
+import Pagination from "../components/Pagination";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
 export default function Trails() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Initialize state from URL params
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+  const [difficultyFilter, setDifficultyFilter] = useState(searchParams.get("difficulty") || "");
+  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get("page"), 10) || 1);
+  const [pageSize, setPageSize] = useState(parseInt(searchParams.get("limit"), 10) || 10);
+
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("search", searchQuery);
+    if (difficultyFilter) params.set("difficulty", difficultyFilter);
+    if (currentPage > 1) params.set("page", currentPage.toString());
+    if (pageSize !== 10) params.set("limit", pageSize.toString());
+
+    setSearchParams(params, { replace: true });
+  }, [searchQuery, difficultyFilter, currentPage, pageSize, setSearchParams]);
 
   const fetchTrails = useCallback(() => {
     const filters = {};
     if (searchQuery) filters.search = searchQuery;
     if (difficultyFilter) filters.difficulty = difficultyFilter;
-    return trailsApi.getAll(filters);
-  }, [searchQuery, difficultyFilter]);
 
-  const { data, loading, error, execute: refetch } = useAsync(fetchTrails, [searchQuery, difficultyFilter]);
+    return trailsApi.getAll(filters, { page: currentPage, limit: pageSize });
+  }, [searchQuery, difficultyFilter, currentPage, pageSize]);
 
-  // Refetch when filters change
+  const { data, loading, error, execute: refetch } = useAsync(fetchTrails, [searchQuery, difficultyFilter, currentPage, pageSize]);
+
+  // Refetch when filters or pagination change
   useEffect(() => {
     refetch();
-  }, [searchQuery, difficultyFilter, refetch]);
+  }, [searchQuery, difficultyFilter, currentPage, pageSize, refetch]);
 
   const trails = data?.data || [];
+  const totalTrails = data?.total || 0;
+  const totalPages = data?.totalPages || 1;
+
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+    setCurrentPage(1); // Reset to page 1 when search changes
+  };
+
+  const handleDifficultyChange = (value) => {
+    setDifficultyFilter(value);
+    setCurrentPage(1); // Reset to page 1 when filter changes
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePageSizeChange = (size) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to page 1 when page size changes
+  };
 
   const handleClearFilters = () => {
     setSearchQuery("");
     setDifficultyFilter("");
+    setCurrentPage(1);
   };
 
   const hasActiveFilters = searchQuery || difficultyFilter;
@@ -61,18 +103,18 @@ export default function Trails() {
       <div className="filters-section">
         <SearchBar
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={handleSearchChange}
           placeholder="Search by trail name or location..."
         />
         <DifficultyFilter
           value={difficultyFilter}
-          onChange={setDifficultyFilter}
+          onChange={handleDifficultyChange}
         />
       </div>
 
       <div className="action-bar">
         <span style={{ color: "#718096" }}>
-          {trails.length} trail{trails.length !== 1 ? "s" : ""} {hasActiveFilters ? "found" : "available"}
+          {totalTrails} trail{totalTrails !== 1 ? "s" : ""} {hasActiveFilters ? "found" : "available"}
         </span>
         <div className="action-bar-right">
           {hasActiveFilters && (
@@ -93,7 +135,20 @@ export default function Trails() {
           <p>{hasActiveFilters ? "Try adjusting your search or filters." : "Check back later for new hiking trails."}</p>
         </div>
       ) : (
-        trails.map((trail) => <TrailCard key={trail.id} trail={trail} />)
+        <>
+          <div className="trails-list">
+            {trails.map((trail) => <TrailCard key={trail.id} trail={trail} />)}
+          </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            pageSize={pageSize}
+            onPageSizeChange={handlePageSizeChange}
+            totalItems={totalTrails}
+          />
+        </>
       )}
     </div>
   );

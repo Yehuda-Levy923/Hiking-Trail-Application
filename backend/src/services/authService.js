@@ -87,6 +87,54 @@ export const authService = {
     );
     return result.rows.length > 0;
   },
+
+  /**
+   * Check if email is used by another user (not the current user)
+   * @param {string} email - Email to check
+   * @param {number} excludeUserId - User ID to exclude from check
+   * @returns {Promise<boolean>} - True if email is used by another user
+   */
+  async emailExistsForOther(email, excludeUserId) {
+    const result = await pool.query(
+      `SELECT 1 FROM users WHERE email = $1 AND id != $2`,
+      [email.toLowerCase(), excludeUserId]
+    );
+    return result.rows.length > 0;
+  },
+
+  /**
+   * Update user profile
+   * @param {number} id - User ID
+   * @param {Object} updates - Profile updates (name, email)
+   * @returns {Promise<Object>} - Updated user (without password)
+   */
+  async updateProfile(id, updates) {
+    const { name, email } = updates;
+    const result = await pool.query(
+      `UPDATE users
+       SET name = COALESCE($1, name),
+           email = COALESCE($2, email)
+       WHERE id = $3
+       RETURNING id, email, name, created_at, updated_at`,
+      [name, email?.toLowerCase(), id]
+    );
+    return result.rows[0] || null;
+  },
+
+  /**
+   * Update user password
+   * @param {number} id - User ID
+   * @param {string} newPassword - New plain text password
+   * @returns {Promise<boolean>} - True if updated
+   */
+  async updatePassword(id, newPassword) {
+    const passwordHash = await passwordService.hash(newPassword);
+    const result = await pool.query(
+      `UPDATE users SET password_hash = $1 WHERE id = $2`,
+      [passwordHash, id]
+    );
+    return result.rowCount > 0;
+  },
 };
 
 export default authService;

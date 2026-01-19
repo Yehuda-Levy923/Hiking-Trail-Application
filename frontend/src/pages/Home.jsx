@@ -26,22 +26,22 @@ export default function Home() {
 
       {stats && (
         <div className="trail-stats" style={{ marginTop: "32px" }}>
-          <div className="stat-card">
+          <Link to="/trails" className="stat-card" style={{ textDecoration: "none", cursor: "pointer" }}>
             <div className="stat-value">{stats.total_trails}</div>
             <div className="stat-label">🏔️ Trails Tracked</div>
-          </div>
-          <div className="stat-card">
+          </Link>
+          <Link to="/trails?traffic=low" className="stat-card" style={{ textDecoration: "none", cursor: "pointer" }}>
             <div className="stat-value">{stats.low_traffic}</div>
             <div className="stat-label">✅ Low Traffic</div>
-          </div>
-          <div className="stat-card">
+          </Link>
+          <Link to="/trails?traffic=moderate" className="stat-card" style={{ textDecoration: "none", cursor: "pointer" }}>
             <div className="stat-value">{stats.moderate_traffic}</div>
             <div className="stat-label">⚠️ Moderate Traffic</div>
-          </div>
-          <div className="stat-card">
+          </Link>
+          <Link to="/trails?traffic=high" className="stat-card" style={{ textDecoration: "none", cursor: "pointer" }}>
             <div className="stat-value">{stats.high_traffic}</div>
             <div className="stat-label">🔥 High Traffic</div>
-          </div>
+          </Link>
         </div>
       )}
 

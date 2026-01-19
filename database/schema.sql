@@ -4,6 +4,8 @@
 -- ============================================
 
 -- Drop tables if they exist (for clean setup)
+DROP TABLE IF EXISTS user_favorites CASCADE;
+DROP TABLE IF EXISTS password_reset_tokens CASCADE;
 DROP TABLE IF EXISTS traffic_reports CASCADE;
 DROP TABLE IF EXISTS trails CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -41,6 +43,29 @@ CREATE TABLE trails (
 );
 
 -- ============================================
+-- Password Reset Tokens Table (Sprint 3)
+-- ============================================
+CREATE TABLE password_reset_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    used BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ============================================
+-- User Favorites Table (Sprint 3)
+-- ============================================
+CREATE TABLE user_favorites (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    trail_id INTEGER REFERENCES trails(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE(user_id, trail_id)
+);
+
+-- ============================================
 -- Traffic Reports Table
 -- ============================================
 CREATE TABLE traffic_reports (
@@ -59,6 +84,12 @@ CREATE TABLE traffic_reports (
 CREATE INDEX idx_traffic_trail_id ON traffic_reports(trail_id);
 CREATE INDEX idx_traffic_updated ON traffic_reports(updated_at DESC);
 CREATE INDEX idx_trails_difficulty ON trails(difficulty);
+
+-- Sprint 3 Indexes
+CREATE INDEX idx_reset_tokens_token ON password_reset_tokens(token);
+CREATE INDEX idx_reset_tokens_user_id ON password_reset_tokens(user_id);
+CREATE INDEX idx_favorites_user_id ON user_favorites(user_id);
+CREATE INDEX idx_favorites_trail_id ON user_favorites(trail_id);
 
 -- ============================================
 -- Function to auto-update updated_at

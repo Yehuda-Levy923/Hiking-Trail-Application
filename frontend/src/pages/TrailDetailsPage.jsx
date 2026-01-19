@@ -4,6 +4,7 @@ import { trailsApi, trafficApi } from "../api/api";
 import { useAsync } from "../hooks/useAsync";
 import TrafficIndicator from "../components/TrafficIndicator";
 import RefreshButton from "../components/RefreshButton";
+import FavoriteButton from "../components/FavoriteButton";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
@@ -70,7 +71,10 @@ export default function TrailDetailsPage() {
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
           <div>
-            <h1>{trail.name}</h1>
+            <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)", marginBottom: "var(--spacing-sm)" }}>
+              <h1 style={{ margin: 0 }}>{trail.name}</h1>
+              <FavoriteButton trailId={parseInt(id, 10)} size="large" />
+            </div>
             {trail.location && (
               <div className="trail-location">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

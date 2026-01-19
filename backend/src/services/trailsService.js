@@ -2,18 +2,17 @@ import pool from "../config/db.js";
 
 export const trailsService = {
   /**
-   * Get all trails with optional filtering and search
+   * Get all trails with optional filtering, search, and pagination
+   * @param {Object} filters - Filter options
+   * @param {Object} pagination - Pagination options (page, limit)
+   * @returns {Promise<{data: Array, total: number, page: number, totalPages: number}>}
    */
-  async getAll(filters = {}) {
-    let query = `
-      SELECT
-        t.*,
-        tr.congestion_level,
-        tr.updated_at as traffic_updated_at
-      FROM trails t
-      LEFT JOIN traffic_reports tr ON t.id = tr.trail_id
-    `;
+  async getAll(filters = {}, pagination = {}) {
+    const { page = 1, limit = 10 } = pagination;
+    const offset = (page - 1) * limit;
 
+    // Build base query for both data and count
+    let baseConditions = "";
     const conditions = [];
     const params = [];
     let paramIndex = 1;
@@ -41,13 +40,37 @@ export const trailsService = {
     }
 
     if (conditions.length > 0) {
-      query += ` WHERE ${conditions.join(" AND ")}`;
+      baseConditions = ` WHERE ${conditions.join(" AND ")}`;
     }
 
-    query += " ORDER BY t.id";
+    // Get total count
+    const countQuery = `SELECT COUNT(*) as total FROM trails t${baseConditions}`;
+    const countResult = await pool.query(countQuery, params);
+    const total = parseInt(countResult.rows[0].total, 10);
 
-    const result = await pool.query(query, params);
-    return result.rows;
+    // Get paginated data
+    let dataQuery = `
+      SELECT
+        t.*,
+        tr.congestion_level,
+        tr.updated_at as traffic_updated_at
+      FROM trails t
+      LEFT JOIN traffic_reports tr ON t.id = tr.trail_id
+      ${baseConditions}
+      ORDER BY t.id
+      LIMIT $${paramIndex++} OFFSET $${paramIndex}
+    `;
+
+    const dataParams = [...params, limit, offset];
+    const result = await pool.query(dataQuery, dataParams);
+
+    return {
+      data: result.rows,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   },
 
   /**

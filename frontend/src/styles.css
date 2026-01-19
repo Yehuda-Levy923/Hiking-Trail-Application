@@ -27,9 +27,9 @@
   --bg-accent: #e8f5e3;
 
   /* Text Colors */
-  --text-primary: #2C3E50;
-  --text-secondary: #34495E;
-  --text-muted: #7F8C8D;
+  --text-primary: #1a1a1a;
+  --text-secondary: #2d2d2d;
+  --text-muted: #4a4a4a;
   --text-light: #ffffff;
 
   /* Traffic Level Colors - Nature Themed */
@@ -83,8 +83,7 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #1a3d0a 0%, #2d5016 50%, #1e4d2b 100%);
-  background-attachment: fixed;
+  background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80') center center / cover no-repeat fixed;
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
@@ -98,20 +97,15 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image:
-    /* Misty forest overlay */
-    radial-gradient(ellipse at 10% 90%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 90% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 35%),
-    /* Tree silhouettes at bottom */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23143d0a' fill-opacity='0.4' d='M0,320L60,320C120,320,240,320,360,288C480,256,600,192,720,192C840,192,960,256,1080,272C1200,288,1320,256,1380,240L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"),
-    /* Pine tree pattern */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpolygon fill='%231a4d15' fill-opacity='0.15' points='50,10 65,40 58,40 70,65 60,65 75,90 25,90 40,65 30,65 42,40 35,40'/%3E%3C/svg%3E");
-  background-size: 100% 100%, 100% 100%, 100% 40%, 150px 150px;
-  background-position: center, center, bottom, center;
-  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background: linear-gradient(
+    180deg,
+    rgba(26, 61, 10, 0.7) 0%,
+    rgba(45, 80, 22, 0.5) 30%,
+    rgba(30, 77, 43, 0.6) 70%,
+    rgba(13, 41, 6, 0.8) 100%
+  );
   pointer-events: none;
   z-index: -1;
-  opacity: 1;
 }
 
 body::after {
@@ -120,11 +114,8 @@ body::after {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 300px;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath fill='%230d2906' fill-opacity='0.6' d='M0,200 L0,120 Q60,80 120,110 Q180,140 240,100 Q300,60 360,90 Q420,120 480,80 Q540,40 600,70 Q660,100 720,60 Q780,20 840,50 Q900,80 960,40 Q1020,0 1080,30 Q1140,60 1200,20 Q1260,0 1320,40 Q1380,80 1440,60 L1440,200 Z'%3E%3C/path%3E%3C/svg%3E");
-  background-size: cover;
-  background-position: bottom;
+  height: 200px;
+  background: linear-gradient(to top, rgba(13, 41, 6, 0.9) 0%, transparent 100%);
   pointer-events: none;
   z-index: -1;
 }
@@ -134,13 +125,17 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.3;
   color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 h1 { font-size: 2.25rem; }
 h2 { font-size: 1.75rem; }
 h3 { font-size: 1.25rem; }
 
-p { color: var(--text-secondary); }
+p {
+  color: var(--text-secondary);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
 
 /* === Layout === */
 .container {
@@ -148,21 +143,21 @@ p { color: var(--text-secondary); }
   max-width: 1100px;
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-md);
-  background: rgba(255, 255, 255, 0.92);
+  background: transparent;
   min-height: calc(100vh - 70px);
-  backdrop-filter: blur(10px);
 }
 
 .page-header {
   margin-bottom: var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.5);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
 }
 
 .page-header h1 {
-  background: var(--bg-gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--forest-green-dark);
   margin-bottom: var(--spacing-sm);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 @keyframes gradient-shift {
@@ -172,18 +167,17 @@ p { color: var(--text-secondary); }
 
 .page-header p {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 /* === Navigation === */
 .navbar {
-  background: var(--bg-gradient-1);
+  background: linear-gradient(135deg, rgba(45, 80, 22, 0.3) 0%, rgba(58, 107, 31, 0.3) 100%);
   padding: var(--spacing-md) var(--spacing-lg);
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-forest);
-  backdrop-filter: blur(10px);
 }
 
 .navbar-inner {
@@ -230,7 +224,7 @@ p { color: var(--text-secondary); }
 
 /* === Cards === */
 .card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-md);
@@ -258,7 +252,7 @@ p { color: var(--text-secondary); }
 
 /* === Trail Cards === */
 .trail-card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
@@ -299,22 +293,21 @@ p { color: var(--text-secondary); }
 
 .trail-title {
   font-size: 1.35rem;
-  background: var(--bg-gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--forest-green-dark);
   font-weight: 700;
   margin: 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .trail-desc {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: var(--spacing-md);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.6;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .trail-meta {
@@ -329,11 +322,11 @@ p { color: var(--text-secondary); }
   align-items: center;
   gap: var(--spacing-xs);
   font-size: 0.9rem;
-  color: var(--text-muted);
-  background: var(--bg-accent);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.6);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-full);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .trail-meta-item svg {
@@ -398,7 +391,7 @@ p { color: var(--text-secondary); }
   display: flex;
   align-items: center;
   gap: var(--spacing-lg);
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-lg);
@@ -463,8 +456,8 @@ p { color: var(--text-secondary); }
 
 .traffic-info h3 {
   font-size: 1rem;
-  color: var(--text-muted);
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
   margin-bottom: var(--spacing-xs);
 }
 
@@ -481,8 +474,9 @@ p { color: var(--text-secondary); }
 
 .traffic-updated {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: var(--spacing-xs);
+  font-weight: 500;
 }
 
 /* Mini traffic badge for cards */
@@ -633,7 +627,8 @@ p { color: var(--text-secondary); }
   align-items: center;
   justify-content: center;
   padding: var(--spacing-2xl);
-  color: var(--text-muted);
+  color: var(--text-light);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .spinner {
@@ -687,7 +682,9 @@ p { color: var(--text-secondary); }
 .empty-state {
   text-align: center;
   padding: var(--spacing-2xl);
-  color: var(--text-muted);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-lg);
 }
 
 .empty-state svg {
@@ -705,14 +702,16 @@ p { color: var(--text-secondary); }
 .trail-detail-header h1 {
   color: var(--forest-green-dark);
   margin-bottom: var(--spacing-sm);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .trail-location {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
-  color: var(--text-muted);
+  color: var(--text-primary);
   font-size: 1rem;
+  font-weight: 500;
 }
 
 .trail-stats {
@@ -723,7 +722,7 @@ p { color: var(--text-secondary); }
 }
 
 .stat-card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   text-align: center;
@@ -757,28 +756,23 @@ p { color: var(--text-secondary); }
 .stat-value {
   font-size: 2.5rem;
   font-weight: 800;
-  background: var(--bg-gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--forest-green-dark);
   margin-bottom: var(--spacing-xs);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
-
-.stat-card:nth-child(2) .stat-value { background: var(--bg-gradient-3); -webkit-background-clip: text; background-clip: text; }
-.stat-card:nth-child(3) .stat-value { background: var(--bg-gradient-4); -webkit-background-clip: text; background-clip: text; }
-.stat-card:nth-child(4) .stat-value { background: var(--bg-gradient-2); -webkit-background-clip: text; background-clip: text; }
 
 .stat-label {
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--text-primary);
   margin-top: var(--spacing-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .trail-description-card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -787,7 +781,8 @@ p { color: var(--text-secondary); }
 .trail-description-card h2 {
   font-size: 1.1rem;
   margin-bottom: var(--spacing-md);
-  color: var(--text-primary);
+  color: var(--forest-green-dark);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .trail-description-card p {
@@ -806,7 +801,7 @@ p { color: var(--text-secondary); }
 
 /* === Home Page Hero === */
 .hero {
-  background: var(--bg-gradient-1);
+  background: linear-gradient(135deg, rgba(45, 80, 22, 0.3) 0%, rgba(58, 107, 31, 0.3) 100%);
   color: var(--text-light);
   padding: 64px var(--spacing-md);
   text-align: center;
@@ -869,7 +864,7 @@ p { color: var(--text-secondary); }
 }
 
 .auth-card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   width: 100%;
@@ -896,15 +891,13 @@ p { color: var(--text-secondary); }
 }
 
 .auth-header h1 {
-  background: var(--bg-gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--forest-green-dark);
   margin-bottom: var(--spacing-sm);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .auth-header p {
-  color: var(--text-muted);
+  color: var(--text-primary);
 }
 
 .auth-form {
@@ -975,7 +968,7 @@ p { color: var(--text-secondary); }
 }
 
 .auth-footer p {
-  color: var(--text-muted);
+  color: var(--text-primary);
 }
 
 .auth-footer a {
@@ -1112,7 +1105,7 @@ p { color: var(--text-secondary); }
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-lg);
-  background: white;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }

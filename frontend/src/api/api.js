@@ -38,12 +38,14 @@ api.interceptors.response.use(
 // Trails API
 // ============================================
 export const trailsApi = {
-  getAll: async (filters = {}) => {
+  getAll: async (filters = {}, pagination = {}) => {
     const params = new URLSearchParams();
     if (filters.search) params.append("search", filters.search);
     if (filters.difficulty) params.append("difficulty", filters.difficulty);
     if (filters.maxLength) params.append("maxLength", filters.maxLength);
     if (filters.location) params.append("location", filters.location);
+    if (pagination.page) params.append("page", pagination.page);
+    if (pagination.limit) params.append("limit", pagination.limit);
 
     const response = await api.get(`/trails?${params}`);
     return response.data;
@@ -116,6 +118,55 @@ export const authApi = {
 
   me: async () => {
     const response = await api.get("/auth/me");
+    return response.data;
+  },
+
+  forgotPassword: async (email) => {
+    const response = await api.post("/auth/forgot-password", { email });
+    return response.data;
+  },
+
+  resetPassword: async (token, password, confirmPassword) => {
+    const response = await api.post("/auth/reset-password", {
+      token,
+      password,
+      confirmPassword,
+    });
+    return response.data;
+  },
+};
+
+// ============================================
+// Users API (Profile & Favorites)
+// ============================================
+export const usersApi = {
+  getProfile: async () => {
+    const response = await api.get("/users/profile");
+    return response.data;
+  },
+
+  updateProfile: async (profileData) => {
+    const response = await api.put("/users/profile", profileData);
+    return response.data;
+  },
+
+  getFavorites: async () => {
+    const response = await api.get("/users/favorites");
+    return response.data;
+  },
+
+  addFavorite: async (trailId) => {
+    const response = await api.post(`/users/favorites/${trailId}`);
+    return response.data;
+  },
+
+  removeFavorite: async (trailId) => {
+    const response = await api.delete(`/users/favorites/${trailId}`);
+    return response.data;
+  },
+
+  checkFavorite: async (trailId) => {
+    const response = await api.get(`/users/favorites/${trailId}`);
     return response.data;
   },
 };

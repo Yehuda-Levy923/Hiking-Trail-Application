@@ -1,25 +1,50 @@
 import trailsService from "../services/trailsService.js";
+import favoritesService from "../services/favoritesService.js";
 import { asyncHandler, ApiError } from "../middleware/errorHandler.js";
 
 export const trailsController = {
   /**
    * GET /api/trails
-   * Get all trails with optional filtering and search
+   * Get all trails with optional filtering, search, and pagination
    */
   getAll: asyncHandler(async (req, res) => {
-    const { difficulty, maxLength, location, search } = req.query;
+    const { difficulty, maxLength, location, search, page, limit } = req.query;
 
-    const trails = await trailsService.getAll({
-      difficulty,
-      maxLength: maxLength ? parseFloat(maxLength) : undefined,
-      location,
-      search,
-    });
+    // Parse and validate pagination parameters
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10) || 10));
+
+    const result = await trailsService.getAll(
+      {
+        difficulty,
+        maxLength: maxLength ? parseFloat(maxLength) : undefined,
+        location,
+        search,
+      },
+      {
+        page: pageNum,
+        limit: limitNum,
+      }
+    );
+
+    // If user is authenticated, add favorite status to each trail
+    let trailsWithFavorites = result.data;
+    if (req.user) {
+      const trailIds = result.data.map((trail) => trail.id);
+      const favoriteSet = await favoritesService.getFavoriteStatuses(req.user.id, trailIds);
+      trailsWithFavorites = result.data.map((trail) => ({
+        ...trail,
+        is_favorite: favoriteSet.has(trail.id),
+      }));
+    }
 
     res.json({
       success: true,
-      count: trails.length,
-      data: trails,
+      count: trailsWithFavorites.length,
+      total: result.total,
+      page: result.page,
+      totalPages: result.totalPages,
+      data: trailsWithFavorites,
     });
   }),
 
@@ -34,9 +59,16 @@ export const trailsController = {
       throw ApiError.notFound(`Trail with ID ${req.params.id} not found`);
     }
 
+    // If user is authenticated, add favorite status
+    let trailData = trail;
+    if (req.user) {
+      const isFavorite = await favoritesService.isFavorited(req.user.id, trail.id);
+      trailData = { ...trail, is_favorite: isFavorite };
+    }
+
     res.json({
       success: true,
-      data: trail,
+      data: trailData,
     });
   }),
 
